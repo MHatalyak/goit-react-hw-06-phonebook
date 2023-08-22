@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact, deleteContact, setFilter } from './store';
 import ContactForm from './ContactForm';
@@ -18,7 +17,6 @@ const App = () => {
 
   const handleAddContact = (name, number) => {
     const contact = {
-      id: nanoid(),
       name,
       number,
     };
@@ -47,6 +45,7 @@ const App = () => {
   };
 
   const filteredContacts = getFilteredContacts();
+  console.log(contacts);
 
   return (
     <Container>

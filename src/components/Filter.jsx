@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from './store';
 import { FilterContainer, FilterLabel, FilterInput } from './App.styled';
@@ -8,21 +7,16 @@ const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filter);
 
+  const handleFilterChange = event => {
+    dispatch(setFilter(event.target.value));
+  };
+
   return (
     <FilterContainer>
       <FilterLabel>Filter contacts by name:</FilterLabel>
-      <FilterInput
-        type="text"
-        value={filter}
-        onChange={event => dispatch(setFilter(event.target.value))}
-      />
+      <FilterInput type="text" value={filter} onChange={handleFilterChange} />
     </FilterContainer>
   );
-};
-
-Filter.propTypes = {
-  filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 export default Filter;
