@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from './store';
 import { Form, Label, Input, Button } from './App.styled';
 import { nanoid } from 'nanoid';
+
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const [contact, setContact] = useState({ id: '', name: '', number: '' });
+  const contacts = useSelector(state => state.contacts);
+  const [contact, setContact] = useState({ name: '', number: '' });
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -14,8 +16,17 @@ const ContactForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(addContact({ ...contact, id: nanoid() }));
-    setContact({ id: '', name: '', number: '' });
+
+    const existingContact = contacts.find(
+      c => c.name.toLowerCase() === contact.name.toLowerCase()
+    );
+
+    if (existingContact) {
+      alert(`${contact.name} is already exist`);
+    } else {
+      dispatch(addContact({ ...contact, id: nanoid() }));
+      setContact({ name: '', number: '' });
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteContact } from './store';
 import {
   List,
@@ -10,9 +10,9 @@ import {
   DeleteButton,
 } from './App.styled';
 
-const ContactList = ({ contacts }) => {
+const ContactList = () => {
   const dispatch = useDispatch();
-
+  const contacts = useSelector(state => state.contacts);
   return (
     <List>
       {contacts.map(contact => (
@@ -35,7 +35,7 @@ ContactList.propTypes = {
       name: PropTypes.string.isRequired,
       number: PropTypes.string.isRequired,
     })
-  ).isRequired,
+  ),
 };
 
 export default ContactList;
